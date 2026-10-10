@@ -1,5 +1,6 @@
+from pathlib import Path
 
-<!DOCTYPE html>
+html = r'''<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -111,16 +112,72 @@ footer{
     font-size:13px
 }
 
+/* Love popup */
+.love-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(20,40,25,.75);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:9999
+}
+
+.love-box{
+    background:#fff8fb;
+    width:100%;
+    max-width:380px;
+    padding:32px 22px;
+    border-radius:22px;
+    text-align:center;
+    box-shadow:0 12px 40px rgba(0,0,0,.25);
+    border:2px solid #ffc5d8;
+    animation:lovePop .45s ease-out
+}
+
+.love-heart{
+    font-size:48px;
+    margin-bottom:10px
+}
+
+.love-box h2{
+    color:#e63970;
+    font-size:27px;
+    margin:0 0 22px
+}
+
+.love-button{
+    background:#e63970;
+    color:white;
+    font-size:16px;
+    padding:13px 20px;
+    border-radius:30px;
+    width:100%;
+    margin:0
+}
+
+.love-button:hover{
+    background:#c9255a;
+    opacity:1
+}
+
+@keyframes lovePop{
+    from{opacity:0;transform:scale(.8)}
+    to{opacity:1;transform:scale(1)}
+}
+
 @media(max-width:600px){
     .grid{grid-template-columns:1fr}
     .full{grid-column:auto}
     .card{padding:17px}
     header h1{font-size:23px}
+    .love-box h2{font-size:24px}
 }
 
 @media print{
     header,.topbar,.input-card,footer,
-    .output-heading,.output-actions{display:none!important}
+    .output-heading,.output-actions,.love-overlay{display:none!important}
     body{background:white;color:black}
     .container{margin:0;padding:0;max-width:none}
     .card{box-shadow:none;border:none;padding:0}
@@ -130,6 +187,17 @@ footer{
 </head>
 
 <body>
+
+<!-- Love popup shown when the website opens -->
+<div class="love-overlay" id="lovePopup">
+    <div class="love-box">
+        <div class="love-heart">💗🥰💗</div>
+        <h2>I Love you Kichuseee...</h2>
+        <button class="love-button" type="button" onclick="closeLovePopup()">
+            I Love youu too ❤️
+        </button>
+    </div>
+</div>
 
 <header>
     <h1>Kichus Teaching Manual Generator</h1>
@@ -253,6 +321,11 @@ footer{
 const $ = id => document.getElementById(id);
 let language = "en";
 let currentManual = "";
+
+function closeLovePopup(){
+    const popup=$("lovePopup");
+    if(popup) popup.style.display="none";
+}
 
 const T = {
 en:{
@@ -715,3 +788,9 @@ $("date").value=new Date(
 
 </body>
 </html>
+'''
+
+path = Path("/mnt/data/index.html")
+path.write_text(html, encoding="utf-8")
+print(f"Created complete updated website file: {path}")
+print(f"File size: {path.stat().st_size:,} bytes")
