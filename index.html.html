@@ -1,0 +1,717 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kichus Teaching Manual Generator</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    background:#f1f8f1;
+    color:#263b2b;
+    font-family:Arial,sans-serif;
+    line-height:1.65
+}
+
+header{
+    background:#dcedc8;
+    color:#24532d;
+    text-align:center;
+    padding:25px 12px;
+    border-bottom:3px solid #a5d6a7
+}
+
+header h1{margin:0;font-size:28px}
+header p{margin:5px 0 0;color:#426b47}
+
+.topbar,.container{
+    max-width:1000px;
+    margin:16px auto;
+    padding:0 15px
+}
+
+.topbar{display:flex;justify-content:flex-end}
+
+.card{
+    background:#fff;
+    padding:24px;
+    margin-bottom:20px;
+    border-radius:12px;
+    border:1px solid #d7ead7;
+    box-shadow:0 3px 15px #2e7d3210
+}
+
+h2{color:#2e6b3c;margin-top:0;font-size:21px}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px
+}
+
+.field{display:flex;flex-direction:column}
+.full{grid-column:1/-1}
+
+label{font-size:14px;font-weight:bold;margin-bottom:6px}
+
+input,select,textarea{
+    width:100%;
+    padding:11px;
+    border:1px solid #bfd8bf;
+    border-radius:7px;
+    background:#fff;
+    color:#263b2b;
+    font:15px Arial,sans-serif
+}
+
+input:focus,select:focus,textarea:focus{
+    outline:2px solid #a5d6a7;
+    border-color:#66a86b
+}
+
+textarea{min-height:100px;resize:vertical}
+
+button{
+    border:0;
+    border-radius:7px;
+    padding:12px 16px;
+    margin:6px 5px 0 0;
+    font-weight:bold;
+    cursor:pointer
+}
+
+button:hover{opacity:.87}
+
+.primary{background:#66a86b;color:white}
+.green{background:#388e3c;color:white}
+.gray{background:#607d66;color:white}
+.gold{background:#dcedc8;color:#24532d}
+
+.hint{font-size:13px;color:#55745a;margin-top:5px}
+
+#output{
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    line-height:1.9;
+    padding:22px;
+    border:1px solid #d7ead7;
+    border-radius:8px;
+    min-height:180px;
+    background:#fcfffc
+}
+
+footer{
+    text-align:center;
+    color:#55745a;
+    padding:20px;
+    font-size:13px
+}
+
+@media(max-width:600px){
+    .grid{grid-template-columns:1fr}
+    .full{grid-column:auto}
+    .card{padding:17px}
+    header h1{font-size:23px}
+}
+
+@media print{
+    header,.topbar,.input-card,footer,
+    .output-heading,.output-actions{display:none!important}
+    body{background:white;color:black}
+    .container{margin:0;padding:0;max-width:none}
+    .card{box-shadow:none;border:none;padding:0}
+    #output{border:none;padding:0;background:white}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Kichus Teaching Manual Generator</h1>
+    <p id="subtitle">Teaching Manual | Edusoft Malayalam</p>
+</header>
+
+<div class="topbar">
+    <button class="gold" id="langBtn" type="button"
+    onclick="switchLanguage()">Switch to Malayalam</button>
+</div>
+
+<main class="container">
+
+<div class="card input-card">
+    <h2 id="formTitle">Teaching Manual Details</h2>
+
+    <form id="manualForm">
+        <div class="grid">
+
+            <div class="field full">
+                <label id="topicLabel" for="topic">Topic / Lesson Name *</label>
+                <input id="topic" required
+                placeholder="e.g. Fruits, Animals, My Family, The Alphabet">
+                <div class="hint" id="topicHint">
+                    Enter the topic of your English lesson.
+                </div>
+            </div>
+
+            <div class="field">
+                <label id="dateLabel" for="date">Date *</label>
+                <input type="date" id="date" required>
+            </div>
+
+            <div class="field">
+                <label id="classLabel" for="className">Class / Standard *</label>
+                <select id="className">
+                    <option value="1">First Standard</option>
+                    <option value="2">Second Standard</option>
+                    <option value="3">Third Standard</option>
+                    <option value="5">Fifth Standard</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label id="subjectLabel" for="subject">Subject</label>
+                <input id="subject" value="English" readonly>
+            </div>
+
+            <div class="field">
+                <label id="durationLabel" for="duration">Duration</label>
+                <select id="duration">
+                    <option value="30">30 minutes</option>
+                    <option value="40">40 minutes</option>
+                    <option value="45" selected>45 minutes</option>
+                    <option value="60">60 minutes</option>
+                </select>
+            </div>
+
+            <div class="field full">
+                <label id="templateLabel" for="template">
+                    Choose Teaching Template *
+                </label>
+                <select id="template">
+                    <option value="picture">1. Picture-Based Teaching</option>
+                    <option value="story">2. Storytelling Method</option>
+                    <option value="song">3. Songs and Rhymes</option>
+                    <option value="game">4. Game-Based Learning</option>
+                    <option value="conversation">5. Conversation and Role Play</option>
+                    <option value="activity">6. Activity-Based Learning</option>
+                    <option value="phonics">7. Phonics and Sound Method</option>
+                    <option value="reading">8. Guided Reading Method</option>
+                    <option value="action">9. Learning Through Actions (TPR)</option>
+                    <option value="experience">10. Real-Life Experience Method</option>
+                </select>
+                <div class="hint" id="templateHint">
+                    Choose one of the 10 teaching approaches.
+                </div>
+            </div>
+
+            <div class="field full">
+                <label id="methodLabel" for="teachingMethod">
+                    My Way of Teaching (Optional)
+                </label>
+                <textarea id="teachingMethod"
+                placeholder="Describe your preferred teaching approach."></textarea>
+            </div>
+
+        </div>
+
+        <button class="primary" id="generateBtn" type="submit">
+            Generate Teaching Manual
+        </button>
+    </form>
+</div>
+
+<div class="card">
+    <h2 class="output-heading" id="outputTitle">
+        Generated Teaching Manual
+    </h2>
+
+    <div id="output" aria-live="polite">
+        Your teaching manual will appear here.
+    </div>
+
+    <div class="output-actions">
+        <button class="green" id="copyBtn" type="button"
+        onclick="copyManual()">Copy Manual</button>
+
+        <button class="gray" id="printBtn" type="button"
+        onclick="printManual()">Print Manual</button>
+    </div>
+</div>
+
+</main>
+
+<footer id="footer">
+    Kichus Teaching Manual Generator | Edusoft Malayalam
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+let language = "en";
+let currentManual = "";
+
+const T = {
+en:{
+subtitle:"Teaching Manual | Edusoft Malayalam",
+switch:"Switch to Malayalam",
+form:"Teaching Manual Details",
+topic:"Topic / Lesson Name *",
+topicHint:"Enter the topic of your English lesson.",
+date:"Date *",cls:"Class / Standard *",subject:"Subject",
+duration:"Duration",template:"Choose Teaching Template *",
+templateHint:"Choose one of the 10 teaching approaches.",
+method:"My Way of Teaching (Optional)",
+methodPlaceholder:"Describe your preferred teaching approach.",
+generate:"Generate Teaching Manual",
+output:"Generated Teaching Manual",copy:"Copy Manual",
+print:"Print Manual",
+footer:"Kichus Teaching Manual Generator | Edusoft Malayalam",
+empty:"Your teaching manual will appear here.",
+fill:"Please enter the topic and date.",
+first:"Please generate a manual first.",
+copied:"Manual copied successfully!",
+copyFail:"Copy failed. Please select and copy the manual manually.",
+classes:["First Standard","Second Standard","Third Standard","Fifth Standard"],
+durations:["30 minutes","40 minutes","45 minutes","60 minutes"],
+templates:[
+"1. Picture-Based Teaching","2. Storytelling Method",
+"3. Songs and Rhymes","4. Game-Based Learning",
+"5. Conversation and Role Play","6. Activity-Based Learning",
+"7. Phonics and Sound Method","8. Guided Reading Method",
+"9. Learning Through Actions (TPR)","10. Real-Life Experience Method"
+]
+},
+ml:{
+subtitle:"Teaching Manual | Edusoft Malayalam",
+switch:"Switch to English",
+form:"പഠനസഹായി വിവരങ്ങൾ",
+topic:"വിഷയം / പാഠത്തിന്റെ പേര് *",
+topicHint:"പഠിപ്പിക്കേണ്ട ഇംഗ്ലീഷ് പാഠത്തിന്റെ വിഷയം നൽകുക.",
+date:"തീയതി *",cls:"ക്ലാസ് *",subject:"വിഷയം",
+duration:"സമയം",template:"പഠനരീതി തിരഞ്ഞെടുക്കുക *",
+templateHint:"10 വ്യത്യസ്ത അധ്യാപനരീതികളിൽ ഒന്ന് തിരഞ്ഞെടുക്കുക.",
+method:"എന്റെ അധ്യാപനരീതി (ഐച്ഛികം)",
+methodPlaceholder:"നിങ്ങൾക്ക് ഇഷ്ടമുള്ള അധ്യാപനരീതി വിവരിക്കുക.",
+generate:"പഠനസഹായി തയ്യാറാക്കുക",
+output:"തയ്യാറാക്കിയ പഠനസഹായി",copy:"പകർത്തുക",
+print:"പ്രിന്റ് ചെയ്യുക",
+footer:"Kichus Teaching Manual Generator | Edusoft Malayalam",
+empty:"പഠനസഹായി ഇവിടെ കാണാം.",
+fill:"ദയവായി വിഷയവും തീയതിയും നൽകുക.",
+first:"ആദ്യം പഠനസഹായി തയ്യാറാക്കുക.",
+copied:"പഠനസഹായി പകർത്തി!",
+copyFail:"പകർത്താനായില്ല. ദയവായി സ്വയം തിരഞ്ഞെടുത്ത് പകർത്തുക.",
+classes:["ഒന്നാം ക്ലാസ്","രണ്ടാം ക്ലാസ്","മൂന്നാം ക്ലാസ്","അഞ്ചാം ക്ലാസ്"],
+durations:["30 മിനിറ്റ്","40 മിനിറ്റ്","45 മിനിറ്റ്","60 മിനിറ്റ്"],
+templates:[
+"1. ചിത്രങ്ങളിലൂടെ പഠനം","2. കഥയിലൂടെ പഠനം",
+"3. പാട്ടുകളും താളവും","4. കളിയിലൂടെ പഠനം",
+"5. സംഭാഷണവും അഭിനയവും","6. പ്രവർത്തനാധിഷ്ഠിത പഠനം",
+"7. അക്ഷരശബ്ദ പഠനം","8. മാർഗനിർദേശത്തോടെയുള്ള വായന",
+"9. പ്രവർത്തനങ്ങളിലൂടെ പഠനം (TPR)","10. ജീവിതാനുഭവങ്ങളിലൂടെ പഠനം"
+]
+}
+};
+
+const methods={
+picture:{
+en:["Picture-Based Teaching",
+"Show clear pictures related to the topic. Invite children to observe, identify, name and describe what they see. Model simple English words and sentences.",
+"Use picture cards, point-and-say activities, picture-word matching and a simple drawing task.",
+"Ask learners to identify a picture, say the relevant word and use it in a short sentence."],
+ml:["ചിത്രങ്ങളിലൂടെ പഠനം",
+"പാഠവിഷയവുമായി ബന്ധപ്പെട്ട ചിത്രങ്ങൾ കാണിക്കുക. കുട്ടികളോട് ചിത്രങ്ങൾ നിരീക്ഷിക്കാനും തിരിച്ചറിയാനും പേരുപറയാനും ആവശ്യപ്പെടുക. ലളിതമായ ഇംഗ്ലീഷ് വാക്കുകളും വാക്യങ്ങളും മാതൃകയായി കാണിക്കുക.",
+"ചിത്രകാർഡുകൾ, ചൂണ്ടിക്കാണിച്ച് പറയൽ, ചിത്രം-വാക്ക് ചേർക്കൽ, ചെറിയ ചിത്രരചന എന്നിവ നടത്തുക.",
+"ഒരു ചിത്രം തിരിച്ചറിയാനും അതിന്റെ ഇംഗ്ലീഷ് പേര് പറയാനും ചെറിയ വാക്യത്തിൽ ഉപയോഗിക്കാനും ആവശ്യപ്പെടുക."]
+},
+story:{
+en:["Storytelling Method",
+"Introduce the topic through a short, age-appropriate story. Use voice, facial expressions and pictures. Pause to explain important words and ask what might happen next.",
+"Tell the story, arrange picture cards in sequence, retell it with a partner and draw a favourite part.",
+"Ask children to name a character, recall an event or say one simple sentence about the story."],
+ml:["കഥയിലൂടെ പഠനം",
+"കുട്ടികളുടെ പ്രായത്തിന് അനുയോജ്യമായ ചെറിയ കഥയിലൂടെ വിഷയം പരിചയപ്പെടുത്തുക. ശബ്ദഭേദങ്ങളും മുഖഭാവങ്ങളും ചിത്രങ്ങളും ഉപയോഗിക്കുക. പ്രധാന വാക്കുകൾ വിശദീകരിക്കുകയും അടുത്തതായി എന്ത് സംഭവിക്കുമെന്ന് ചോദിക്കുകയും ചെയ്യുക.",
+"കഥ പറയുക, ചിത്രകാർഡുകൾ ക്രമത്തിൽ വയ്ക്കുക, കൂട്ടുകാരനോടൊപ്പം കഥ വീണ്ടും പറയുക, ഇഷ്ടപ്പെട്ട ഭാഗം വരയ്ക്കുക.",
+"കഥാപാത്രത്തിന്റെ പേര് പറയാനും സംഭവങ്ങൾ ഓർക്കാനും കഥയെക്കുറിച്ച് ലളിതമായ വാക്യം പറയാനും ആവശ്യപ്പെടുക."]
+},
+song:{
+en:["Songs and Rhymes",
+"Introduce key words through a simple song, chant or rhyme. Say the words slowly first, then repeat with rhythm, actions and gestures.",
+"Listen, repeat, clap to the rhythm, perform actions and complete a missing word in a familiar line.",
+"Check whether children recognise key words and join in with the rhyme or chant."],
+ml:["പാട്ടുകളും താളവും",
+"ലളിതമായ പാട്ടിലൂടെയോ താളത്തിലൂടെയോ പ്രധാന വാക്കുകൾ പരിചയപ്പെടുത്തുക. ആദ്യം വാക്കുകൾ പതുക്കെ പറയുക; തുടർന്ന് താളവും ആംഗ്യങ്ങളും ചേർത്ത് ആവർത്തിക്കുക.",
+"കേൾക്കുക, ആവർത്തിക്കുക, താളത്തിനൊത്ത് കൈയടിക്കുക, ആംഗ്യങ്ങൾ കാണിക്കുക, പാട്ടിലെ വിട്ടുപോയ വാക്ക് പൂരിപ്പിക്കുക.",
+"പ്രധാന വാക്കുകൾ തിരിച്ചറിയാനും പാട്ടിൽ പങ്കെടുക്കാനും കുട്ടികൾക്ക് കഴിയുന്നുണ്ടോ എന്ന് പരിശോധിക്കുക."]
+},
+game:{
+en:["Game-Based Learning",
+"Explain the target vocabulary and demonstrate a simple learning game. Use clear rules, short rounds and positive encouragement.",
+"Play a word-picture matching game, vocabulary bingo, a guessing game or a classroom object hunt.",
+"Observe participation and ask children to identify or use the target words during the game."],
+ml:["കളിയിലൂടെ പഠനം",
+"പഠിക്കേണ്ട വാക്കുകൾ പരിചയപ്പെടുത്തി ലളിതമായ പഠനകളിയുടെ നിയമങ്ങൾ വിശദീകരിക്കുക. ചെറിയ ഘട്ടങ്ങളായി കളി നടത്തുകയും എല്ലാവർക്കും പങ്കെടുക്കാൻ അവസരം നൽകുകയും ചെയ്യുക.",
+"വാക്ക്-ചിത്രം ചേർക്കൽ, വാക്കുകളുമായി ബന്ധപ്പെട്ട ബിങ്കോ, ഊഹിക്കൽ കളി, ക്ലാസ് മുറിയിലെ വസ്തുക്കൾ കണ്ടെത്തൽ എന്നിവ നടത്തുക.",
+"കളിക്കിടെ കുട്ടികൾ വാക്കുകൾ തിരിച്ചറിയുകയും ഉപയോഗിക്കുകയും ചെയ്യുന്നുണ്ടോ എന്ന് നിരീക്ഷിക്കുക."]
+},
+conversation:{
+en:["Conversation and Role Play",
+"Model a short everyday conversation using simple English. Demonstrate the dialogue, then let children practise in pairs. Model correct expressions gently.",
+"Practise greetings, simple questions and answers, acting out a familiar situation and switching roles.",
+"Listen to pair conversations and check whether children can use suitable words and short expressions."],
+ml:["സംഭാഷണവും അഭിനയവും",
+"ദൈനംദിന സാഹചര്യങ്ങളുമായി ബന്ധപ്പെട്ട ലളിതമായ ഇംഗ്ലീഷ് സംഭാഷണം മാതൃകയായി അവതരിപ്പിക്കുക. തുടർന്ന് കുട്ടികളെ ജോഡികളാക്കി പരിശീലിപ്പിക്കുക. ശരിയായ പ്രയോഗങ്ങൾ മാതൃകയായി കാണിക്കുക.",
+"അഭിവാദ്യങ്ങൾ, ലളിതമായ ചോദ്യോത്തരങ്ങൾ, പരിചിതമായ സാഹചര്യം അഭിനയിക്കൽ, കഥാപാത്രങ്ങൾ മാറി അവതരിപ്പിക്കൽ എന്നിവ നടത്തുക.",
+"കുട്ടികളുടെ സംഭാഷണം ശ്രദ്ധിച്ച് അനുയോജ്യമായ വാക്കുകളും ചെറിയ പ്രയോഗങ്ങളും ഉപയോഗിക്കുന്നുണ്ടോ എന്ന് പരിശോധിക്കുക."]
+},
+activity:{
+en:["Activity-Based Learning",
+"Break the topic into small tasks. Demonstrate each task, give clear instructions and allow children to learn by doing.",
+"Use sorting, matching, sequencing, drawing, labelling or making a simple classroom display.",
+"Check the completed task and ask learners to explain what they have made."],
+ml:["പ്രവർത്തനാധിഷ്ഠിത പഠനം",
+"വിഷയത്തെ ചെറിയ പ്രവർത്തനങ്ങളായി വിഭജിക്കുക. ഓരോ പ്രവർത്തനവും മാതൃകയായി കാണിച്ച് വ്യക്തമായ നിർദേശങ്ങൾ നൽകുക. കുട്ടികൾക്ക് സ്വയം ചെയ്ത് പഠിക്കാൻ അവസരം നൽകുക.",
+"തരംതിരിക്കൽ, ചേർക്കൽ, ക്രമത്തിൽ വയ്ക്കൽ, ചിത്രരചന, പേരെഴുതൽ, ക്ലാസ് മുറിയിൽ ചെറിയ പ്രദർശനം എന്നിവ നടത്തുക.",
+"പൂർത്തിയാക്കിയ പ്രവർത്തനം പരിശോധിക്കുകയും ചെയ്ത കാര്യങ്ങൾ വിശദീകരിക്കാൻ ആവശ്യപ്പെടുകയും ചെയ്യുക."]
+},
+phonics:{
+en:["Phonics and Sound Method",
+"Model the sounds clearly. Help learners listen for beginning or ending sounds, repeat them and connect them with letters or familiar words.",
+"Practise listening and repetition, sound sorting, identifying words with the same beginning sound and matching letters with pictures.",
+"Ask learners to identify the target sound and give or select a word that contains it."],
+ml:["അക്ഷരശബ്ദ പഠനം",
+"പാഠത്തിലെ ശബ്ദങ്ങൾ വ്യക്തമായി ഉച്ചരിക്കുക. വാക്കുകളുടെ തുടക്കത്തിലോ അവസാനത്തിലോ വരുന്ന ശബ്ദങ്ങൾ ശ്രദ്ധിക്കാനും ആവർത്തിക്കാനും അക്ഷരങ്ങളുമായി ബന്ധിപ്പിക്കാനും സഹായിക്കുക.",
+"കേട്ട് ആവർത്തിക്കൽ, ശബ്ദമനുസരിച്ച് തരംതിരിക്കൽ, ഒരേ ശബ്ദത്തിൽ തുടങ്ങുന്ന വാക്കുകൾ കണ്ടെത്തൽ, അക്ഷരങ്ങളും ചിത്രങ്ങളും ചേർക്കൽ എന്നിവ നടത്തുക.",
+"ലക്ഷ്യമിടുന്ന ശബ്ദം തിരിച്ചറിയാനും ആ ശബ്ദമുള്ള ഒരു വാക്ക് പറയാനോ തിരഞ്ഞെടുക്കാനോ ആവശ്യപ്പെടുക."]
+},
+reading:{
+en:["Guided Reading Method",
+"Show the title and illustrations before reading. Read a short text aloud, explain key words and encourage children to read a small part independently.",
+"Predict from pictures, echo-read a sentence, match words with meanings and answer simple questions.",
+"Ask comprehension questions and invite learners to read or explain one short part."],
+ml:["മാർഗനിർദേശത്തോടെയുള്ള വായന",
+"വായനയ്ക്ക് മുമ്പ് തലക്കെട്ടും ചിത്രങ്ങളും കാണിക്കുക. ചെറിയ പാഠഭാഗം വായിച്ച് പ്രധാന വാക്കുകൾ വിശദീകരിക്കുക. തുടർന്ന് ചെറിയ ഭാഗം സ്വയം വായിക്കാൻ കുട്ടികളെ പ്രോത്സാഹിപ്പിക്കുക.",
+"ചിത്രങ്ങൾ നോക്കി ഊഹിക്കുക, വാക്യം കേട്ട് ആവർത്തിക്കുക, വാക്കുകൾ അർത്ഥവുമായി ചേർക്കുക, ചോദ്യങ്ങൾക്ക് ഉത്തരം നൽകുക.",
+"പാഠഭാഗത്തെക്കുറിച്ചുള്ള ചോദ്യങ്ങൾ ചോദിക്കുകയും ചെറിയൊരു ഭാഗം വായിക്കാനോ വിശദീകരിക്കാനോ ആവശ്യപ്പെടുകയും ചെയ്യുക."]
+},
+action:{
+en:["Learning Through Actions (TPR)",
+"Teach words through gestures and movement. Say a word or short instruction, demonstrate the action and invite children to respond physically. Keep activities safe.",
+"Follow simple instructions, mime vocabulary, act out words and take turns giving instructions.",
+"Give a short instruction and observe whether learners respond with the correct action or word."],
+ml:["പ്രവർത്തനങ്ങളിലൂടെ പഠനം (TPR)",
+"ആംഗ്യങ്ങളും ചലനങ്ങളും ഉപയോഗിച്ച് വാക്കുകൾ പഠിപ്പിക്കുക. ഒരു വാക്കോ ചെറിയ നിർദേശമോ പറഞ്ഞ് പ്രവർത്തനം മാതൃകയായി കാണിക്കുക. സുരക്ഷിതമായ പ്രവർത്തനങ്ങൾ മാത്രം തിരഞ്ഞെടുക്കുക.",
+"ലളിതമായ നിർദേശങ്ങൾ അനുസരിക്കുക, വാക്കുകൾ ആംഗ്യങ്ങളിലൂടെ കാണിക്കുക, പ്രവർത്തനങ്ങൾ അവതരിപ്പിക്കുക, കൂട്ടുകാർക്ക് നിർദേശങ്ങൾ നൽകുക.",
+"ഒരു ചെറിയ നിർദേശം നൽകി ശരിയായ പ്രവർത്തനത്തിലൂടെയോ വാക്കിലൂടെയോ കുട്ടികൾ പ്രതികരിക്കുന്നുണ്ടോ എന്ന് പരിശോധിക്കുക."]
+},
+experience:{
+en:["Real-Life Experience Method",
+"Connect the lesson to objects, people and situations children know from home, school or their community. Teach useful words and help learners describe what they observe.",
+"Observe classroom objects, conduct a show-and-tell, group familiar items and describe a real-life example.",
+"Ask learners to name an object, describe one feature or say a simple sentence about their experience."],
+ml:["ജീവിതാനുഭവങ്ങളിലൂടെ പഠനം",
+"വീട്ടിലോ സ്കൂളിലോ സമൂഹത്തിലോ കുട്ടികൾക്ക് പരിചിതമായ വസ്തുക്കളും സാഹചര്യങ്ങളും പാഠവുമായി ബന്ധിപ്പിക്കുക. ആവശ്യമായ വാക്കുകൾ പഠിപ്പിച്ച് നിരീക്ഷിക്കുന്ന കാര്യങ്ങൾ ലളിതമായ ഇംഗ്ലീഷിൽ വിവരിക്കാൻ സഹായിക്കുക.",
+"ക്ലാസ് മുറിയിലെ വസ്തുക്കൾ നിരീക്ഷിക്കുക, പരിചിതമായ വസ്തുവിനെക്കുറിച്ച് പറയുക, വസ്തുക്കൾ തരംതിരിക്കുക, യഥാർത്ഥ ജീവിതത്തിലെ ഉദാഹരണം വിവരിക്കുക.",
+"ഒരു വസ്തുവിന്റെ പേര് പറയാനും ഒരു പ്രത്യേകത വിവരിക്കാനും അനുഭവത്തെക്കുറിച്ച് ലളിതമായ വാക്യം പറയാനും ആവശ്യപ്പെടുക."]
+}
+};
+
+const levels={
+"1":{
+en:"First Standard",
+ml:"ഒന്നാം ക്ലാസ്",
+enText:"Use single words, short phrases, pictures, repetition and oral responses.",
+mlText:"ഒറ്റ വാക്കുകൾ, ചെറിയ പ്രയോഗങ്ങൾ, ചിത്രങ്ങൾ, ആവർത്തനം, വാചിക പ്രതികരണങ്ങൾ എന്നിവ ഉപയോഗിക്കുക."
+},
+"2":{
+en:"Second Standard",
+ml:"രണ്ടാം ക്ലാസ്",
+enText:"Use familiar vocabulary, short sentences, picture-word matching and simple pair work.",
+mlText:"പരിചിതമായ വാക്കുകൾ, ചെറിയ വാക്യങ്ങൾ, ചിത്രം-വാക്ക് ചേർക്കൽ, ലളിതമായ ജോഡി പ്രവർത്തനങ്ങൾ എന്നിവ ഉപയോഗിക്കുക."
+},
+"3":{
+en:"Third Standard",
+ml:"മൂന്നാം ക്ലാസ്",
+enText:"Use short conversations, simple reading, sentence building and guided writing.",
+mlText:"ചെറിയ സംഭാഷണങ്ങൾ, ലളിതമായ വായന, വാക്യനിർമ്മാണം, നിർദേശത്തോടെയുള്ള എഴുത്ത് എന്നിവ ഉപയോഗിക്കുക."
+},
+"5":{
+en:"Fifth Standard",
+ml:"അഞ്ചാം ക്ലാസ്",
+enText:"Use short passages, fuller sentences, pair discussions, comprehension and short writing tasks.",
+mlText:"ചെറിയ പാഠഭാഗങ്ങൾ, വിശദമായ വാക്യങ്ങൾ, ജോഡി ചർച്ചകൾ, വായനാബോധം, ചെറിയ എഴുത്തുപ്രവർത്തനങ്ങൾ എന്നിവ ഉപയോഗിക്കുക."
+}
+};
+
+function topicSpecific(topic,standard,lang){
+    const s=topic.toLowerCase();
+    let en="Introduce the topic with a suitable picture or familiar example. Teach key words, model a short English expression and let learners practise it.";
+    let ml="അനുയോജ്യമായ ചിത്രമോ പരിചിതമായ ഉദാഹരണമോ ഉപയോഗിച്ച് വിഷയം പരിചയപ്പെടുത്തുക. പ്രധാന വാക്കുകൾ പഠിപ്പിച്ച് ചെറിയ ഇംഗ്ലീഷ് പ്രയോഗം മാതൃകയായി കാണിക്കുകയും പരിശീലിപ്പിക്കുകയും ചെയ്യുക.";
+
+    if(/fruit|fruits|vegetable|food/.test(s)){
+        en="Show real fruits, vegetables or pictures. Practise names, colours and 'I like ...'. Let children identify, sort or describe the items.";
+        ml="പഴങ്ങൾ, പച്ചക്കറികൾ അല്ലെങ്കിൽ ചിത്രങ്ങൾ കാണിക്കുക. പേരുകളും നിറങ്ങളും പഠിപ്പിച്ച് 'I like ...' എന്ന വാക്യരീതി പരിശീലിപ്പിക്കുക. വസ്തുക്കൾ തിരിച്ചറിയാനും തരംതിരിക്കാനും വിവരിക്കാനും അവസരം നൽകുക.";
+    }else if(/animal|animals|bird|birds|pet|wild/.test(s)){
+        en="Use animal pictures or sounds. Practise names and sentences such as 'It is a ...' and 'It can ...'. Let learners match animals to pictures.";
+        ml="മൃഗങ്ങളുടെ ചിത്രങ്ങളോ ശബ്ദങ്ങളോ ഉപയോഗിക്കുക. മൃഗങ്ങളുടെ പേരുകളും 'It is a ...', 'It can ...' പോലുള്ള ലളിതമായ വാക്യങ്ങളും പഠിപ്പിക്കുക. മൃഗങ്ങളെ ചിത്രങ്ങളുമായി ചേർക്കാൻ ആവശ്യപ്പെടുക.";
+    }else if(/family|myself|friend|school/.test(s)){
+        en="Use familiar examples to introduce people and places. Model 'This is my ...' or 'I go to ...'. Invite learners to speak about their experiences.";
+        ml="പരിചിതരായ വ്യക്തികളെയും സ്ഥലങ്ങളെയും ഉദാഹരണങ്ങളായി ഉപയോഗിക്കുക. 'This is my ...', 'I go to ...' പോലുള്ള വാക്യങ്ങൾ മാതൃകയായി കാണിക്കുക. സ്വന്തം അനുഭവങ്ങളെക്കുറിച്ച് പറയാൻ കുട്ടികളെ പ്രോത്സാഹിപ്പിക്കുക.";
+    }else if(/colour|color|shape|number/.test(s)){
+        en="Use classroom objects and colourful cards. Ask children to identify, name, group and describe items using the target words.";
+        ml="ക്ലാസ് മുറിയിലെ വസ്തുക്കളും നിറമുള്ള കാർഡുകളും ഉപയോഗിക്കുക. പഠിക്കുന്ന വാക്കുകൾ ഉപയോഗിച്ച് വസ്തുക്കൾ തിരിച്ചറിയാനും പേരുപറയാനും തരംതിരിക്കാനും വിവരിക്കാനും ആവശ്യപ്പെടുക.";
+    }else if(/alphabet|letter|phonics|sound|vowel/.test(s)){
+        en="Display letter cards, model the sounds clearly and connect each letter or sound with a familiar word or picture.";
+        ml="അക്ഷരക്കാർഡുകൾ കാണിച്ച് ശബ്ദങ്ങൾ വ്യക്തമായി ഉച്ചരിക്കുക. ഓരോ അക്ഷരത്തെയും ശബ്ദത്തെയും പരിചിതമായ വാക്കുമായോ ചിത്രവുമായോ ബന്ധിപ്പിക്കുക.";
+    }else if(/story|poem|rhyme|song/.test(s)){
+        en="Read or recite the lesson expressively. Explain key words, ask what may happen next and invite children to retell a small part.";
+        ml="പാഠം ഭാവത്തോടെ വായിക്കുകയോ ചൊല്ലുകയോ ചെയ്യുക. പ്രധാന വാക്കുകൾ വിശദീകരിക്കുക, അടുത്തതായി എന്ത് സംഭവിക്കുമെന്ന് ചോദിക്കുക, ചെറിയ ഭാഗം വീണ്ടും പറയാൻ കുട്ടികളെ പ്രോത്സാഹിപ്പിക്കുക.";
+    }
+
+    const level=levels[standard];
+    return lang==="ml"
+      ?ml+"\n\nക്ലാസ് നിലവാരത്തിനനുസരിച്ച്: "+level.mlText
+      :en+"\n\nClass-level adaptation: "+level.enText;
+}
+
+function switchLanguage(){
+    language=language==="en"?"ml":"en";
+    const t=T[language];
+    document.documentElement.lang=language;
+
+    $("subtitle").textContent=t.subtitle;
+    $("langBtn").textContent=t.switch;
+    $("formTitle").textContent=t.form;
+    $("topicLabel").textContent=t.topic;
+    $("topicHint").textContent=t.topicHint;
+    $("topic").placeholder=language==="en"
+      ?"e.g. Fruits, Animals, My Family, The Alphabet"
+      :"ഉദാ: പഴങ്ങൾ, മൃഗങ്ങൾ, എന്റെ കുടുംബം, അക്ഷരങ്ങൾ";
+    $("dateLabel").textContent=t.date;
+    $("classLabel").textContent=t.cls;
+    $("subjectLabel").textContent=t.subject;
+    $("durationLabel").textContent=t.duration;
+    $("templateLabel").textContent=t.template;
+    $("templateHint").textContent=t.templateHint;
+    $("methodLabel").textContent=t.method;
+    $("teachingMethod").placeholder=t.methodPlaceholder;
+    $("generateBtn").textContent=t.generate;
+    $("outputTitle").textContent=t.output;
+    $("copyBtn").textContent=t.copy;
+    $("printBtn").textContent=t.print;
+    $("footer").textContent=t.footer;
+
+    const oldClass=$("className").value;
+    $("className").innerHTML="";
+    ["1","2","3","5"].forEach((v,i)=>{
+        $("className").add(new Option(t.classes[i],v));
+    });
+    $("className").value=oldClass;
+
+    const oldDuration=$("duration").value;
+    $("duration").innerHTML="";
+    ["30","40","45","60"].forEach((v,i)=>{
+        $("duration").add(new Option(t.durations[i],v));
+    });
+    $("duration").value=oldDuration;
+
+    const oldTemplate=$("template").value;
+    $("template").innerHTML="";
+    Object.keys(methods).forEach((key,i)=>{
+        $("template").add(new Option(t.templates[i],key));
+    });
+    $("template").value=oldTemplate;
+
+    if(currentManual)generateManual();
+    else $("output").textContent=t.empty;
+}
+
+function generateManual(){
+    const topic=$("topic").value.trim();
+    const date=$("date").value;
+    const standard=$("className").value;
+    const duration=$("duration").value;
+    const key=$("template").value;
+    const method=$("teachingMethod").value.trim();
+    const t=T[language];
+
+    if(!topic||!date){alert(t.fill);return;}
+
+    const c=levels[standard];
+    const m=methods[key][language];
+    const d=new Date(date+"T12:00:00").toLocaleDateString(
+      language==="ml"?"ml-IN":"en-IN",
+      {day:"2-digit",month:"long",year:"numeric"}
+    );
+
+    const specific=topicSpecific(topic,standard,language);
+    const personal=method||(language==="en"
+      ?"Use simple English, visual aids, encouragement, repetition and child-friendly activities."
+      :"ലളിതമായ ഇംഗ്ലീഷ്, ദൃശ്യസഹായികൾ, പ്രോത്സാഹനം, ആവർത്തനം, കുട്ടികൾക്ക് അനുയോജ്യമായ പ്രവർത്തനങ്ങൾ എന്നിവ ഉപയോഗിക്കുക.");
+
+    let result;
+
+    if(language==="en"){
+      result=`KICHUS TEACHING MANUAL
+Teaching Manual | Edusoft Malayalam
+
+1. GENERAL INFORMATION
+Topic: ${topic}
+Subject: English
+Class: ${c.en}
+Date: ${d}
+Duration: ${duration} minutes
+Teaching Template: ${m[0]}
+
+2. LEARNING OBJECTIVES
+By the end of the lesson, learners should be able to:
+• Understand basic vocabulary and ideas related to ${topic}.
+• Participate in a learning activity using age-appropriate English.
+• Recognise, say, read or write suitable words or sentences for their class level.
+
+3. PREVIOUS KNOWLEDGE
+Ask children simple questions about ${topic}. Use familiar objects, pictures or experiences to discover what they already know.
+
+4. TEACHING RESOURCES
+• Pictures, picture cards or real objects
+• Word cards and board
+• Suitable textbook or learning materials
+• Materials needed for the selected teaching method
+
+5. INTRODUCTION
+Begin with a short question, picture, object, action or familiar situation related to ${topic}. Encourage learners to share ideas using words they know.
+
+6. PRESENTATION: ${m[0]}
+${m[1]}
+
+7. TOPIC-BASED TEACHING
+${specific}
+
+8. LEARNING ACTIVITIES
+${m[2]}
+
+9. MY WAY OF TEACHING
+${personal}
+
+10. ASSESSMENT
+${m[3]}
+Observe participation, confidence, pronunciation and understanding. Adapt questions to the selected class level.
+
+11. RECAPITULATION
+Review the important words and expressions. Ask learners to recall, identify, say or use something they learned about ${topic}.
+
+12. FOLLOW-UP ACTIVITY
+Ask learners to draw, find, describe or write something related to ${topic}, according to their class level.
+
+13. EXPECTED LEARNING OUTCOME
+Learners develop an age-appropriate understanding of ${topic} and practise relevant English vocabulary or expressions.
+
+14. TEACHER'S REFLECTION
+Record what learners understood, which activity worked well and which areas need further practice.
+
+Note: This is an offline template-based draft. Check it against the actual textbook, lesson and syllabus before classroom use.`;
+    }else{
+      result=`കിച്ചുസ് പഠനസഹായി
+Teaching Manual | Edusoft Malayalam
+
+1. പൊതുവിവരങ്ങൾ
+വിഷയം: English
+പാഠത്തിന്റെ വിഷയം: ${topic}
+ക്ലാസ്: ${c.ml}
+തീയതി: ${d}
+സമയം: ${duration} മിനിറ്റ്
+തിരഞ്ഞെടുത്ത അധ്യാപനരീതി: ${m[0]}
+
+2. പഠനലക്ഷ്യങ്ങൾ
+പാഠാവസാനത്തോടെ കുട്ടികൾക്ക്:
+• ${topic} എന്ന വിഷയവുമായി ബന്ധപ്പെട്ട അടിസ്ഥാന വാക്കുകളും ആശയങ്ങളും മനസ്സിലാക്കാൻ കഴിയും.
+• ക്ലാസിന് അനുയോജ്യമായ ഇംഗ്ലീഷിൽ പഠനപ്രവർത്തനങ്ങളിൽ പങ്കെടുക്കാൻ കഴിയും.
+• അനുയോജ്യമായ വാക്കുകളോ വാക്യങ്ങളോ തിരിച്ചറിയാനും പറയാനും വായിക്കാനും എഴുതാനും കഴിയും.
+
+3. മുൻ അറിവ്
+${topic} എന്ന വിഷയത്തെക്കുറിച്ച് ലളിതമായ ചോദ്യങ്ങൾ ചോദിക്കുക. പരിചിതമായ വസ്തുക്കളും ചിത്രങ്ങളും അനുഭവങ്ങളും ഉപയോഗിച്ച് കുട്ടികളുടെ മുൻ അറിവ് മനസ്സിലാക്കുക.
+
+4. പഠനസാമഗ്രികൾ
+• ചിത്രങ്ങൾ, ചിത്രകാർഡുകൾ അല്ലെങ്കിൽ യഥാർത്ഥ വസ്തുക്കൾ
+• വാക്ക് കാർഡുകളും ബോർഡും
+• അനുയോജ്യമായ പാഠപുസ്തകവും പഠനസാമഗ്രികളും
+• തിരഞ്ഞെടുത്ത അധ്യാപനരീതിക്ക് ആവശ്യമായ വസ്തുക്കൾ
+
+5. ആമുഖം
+${topic} എന്ന വിഷയവുമായി ബന്ധപ്പെട്ട ഒരു ചെറിയ ചോദ്യം, ചിത്രം, വസ്തു, പ്രവർത്തനം അല്ലെങ്കിൽ പരിചിതമായ സാഹചര്യം ഉപയോഗിച്ച് പാഠം ആരംഭിക്കുക.
+
+6. അധ്യാപനരീതി: ${m[0]}
+${m[1]}
+
+7. വിഷയാധിഷ്ഠിത പഠനം
+${specific}
+
+8. പഠനപ്രവർത്തനങ്ങൾ
+${m[2]}
+
+9. എന്റെ അധ്യാപനരീതി
+${personal}
+
+10. മൂല്യനിർണയം
+${m[3]}
+കുട്ടികളുടെ പങ്കാളിത്തം, ആത്മവിശ്വാസം, ഉച്ചാരണം, ആശയഗ്രഹണം എന്നിവ നിരീക്ഷിക്കുക.
+
+11. പുനരവലോകനം
+പ്രധാന വാക്കുകളും പ്രയോഗങ്ങളും ആവർത്തിക്കുക. ${topic} എന്ന വിഷയത്തിൽ പഠിച്ച കാര്യങ്ങൾ ഓർത്തുപറയാനും തിരിച്ചറിയാനും ഉപയോഗിക്കാനും കുട്ടികളോട് ആവശ്യപ്പെടുക.
+
+12. തുടർപ്രവർത്തനം
+ക്ലാസിന്റെ നിലവാരത്തിന് അനുസരിച്ച് ${topic} എന്ന വിഷയവുമായി ബന്ധപ്പെട്ട ചിത്രം വരയ്ക്കാനോ വസ്തു കണ്ടെത്താനോ വിവരിക്കാനോ എഴുതാനോ ആവശ്യപ്പെടുക.
+
+13. പ്രതീക്ഷിക്കുന്ന പഠനഫലം
+${topic} എന്ന വിഷയത്തെക്കുറിച്ചുള്ള അടിസ്ഥാന ധാരണ വളർത്തുകയും അനുയോജ്യമായ ഇംഗ്ലീഷ് വാക്കുകളോ പ്രയോഗങ്ങളോ പരിശീലിക്കുകയും ചെയ്യുക.
+
+14. അധ്യാപകന്റെ പ്രതിഫലനം
+കുട്ടികൾ എന്താണ് മനസ്സിലാക്കിയത്, ഏത് പ്രവർത്തനമാണ് ഫലപ്രദമായത്, ഏതെല്ലാം കാര്യങ്ങൾ വീണ്ടും പരിശീലിപ്പിക്കണം എന്നിവ രേഖപ്പെടുത്തുക.
+
+കുറിപ്പ്: ഇത് ഓഫ്‌ലൈൻ മാതൃകയെ അടിസ്ഥാനമാക്കിയുള്ള പഠനസഹായിയാണ്. ക്ലാസിൽ ഉപയോഗിക്കുന്നതിന് മുമ്പ് യഥാർത്ഥ പാഠപുസ്തകം, പാഠഭാഗം, പാഠ്യപദ്ധതി എന്നിവയുമായി പരിശോധിക്കുക.`;
+    }
+
+    currentManual=result;
+    $("output").textContent=result;
+}
+
+$("manualForm").addEventListener("submit",e=>{
+    e.preventDefault();
+    generateManual();
+});
+
+async function copyManual(){
+    if(!currentManual){alert(T[language].first);return;}
+    try{
+        await navigator.clipboard.writeText(currentManual);
+        alert(T[language].copied);
+    }catch(e){
+        const a=document.createElement("textarea");
+        a.value=currentManual;
+        a.style.position="fixed";
+        a.style.opacity="0";
+        document.body.appendChild(a);
+        a.select();
+        const ok=document.execCommand("copy");
+        a.remove();
+        alert(ok?T[language].copied:T[language].copyFail);
+    }
+}
+
+function printManual(){
+    if(!currentManual){alert(T[language].first);return;}
+    window.print();
+}
+
+const now=new Date();
+$("date").value=new Date(
+    now.getTime()-now.getTimezoneOffset()*60000
+).toISOString().slice(0,10);
+</script>
+
+</body>
+</html>
